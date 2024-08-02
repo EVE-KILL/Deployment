@@ -41,8 +41,8 @@ jobs:
 
       - name: Create .npmrc
         run: |
-          echo "//npm.pkg.github.com/:_authToken=${{ secrets.REPO_ACCESS_TOKEN }}" > .npmrc
-          echo "@eveshipfit:registry=https://npm.pkg.github.com/" >> .npmrc
+          echo "//npm.pkg.github.com/:_authToken=${{ secrets.REPO_ACCESS_TOKEN }}" > frontend/.npmrc
+          echo "@eveshipfit:registry=https://npm.pkg.github.com/" >> frontend/.npmrc
 
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@aa33708b10e362ff993539393ff100fa93ed6a27 # v3.5.0
