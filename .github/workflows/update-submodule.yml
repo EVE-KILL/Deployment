@@ -19,7 +19,7 @@ jobs:
           echo "Commit: ${{ github.event.client_payload.commit }}"
 
       - name: Checkout Repo
-        uses: actions/checkout@v2
+        uses: actions/checkout@v4
         with:
           submodules: true
           fetch-depth: 0
