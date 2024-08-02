@@ -1,0 +1,6 @@
+[submodule "killboard"]
+	path = killboard
+	url = git@github.com:EVE-KILL/Killboard.git
+[submodule "frontend"]
+	path = frontend
+	url = git@github.com:EVE-KILL/Frontend.git
