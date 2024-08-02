@@ -15,7 +15,7 @@ RUN \
 # syntax=docker/dockerfile:1.4
 FROM node:22
 
-LABEL org.opencontainers.image.source = "https://github.com/EVE-KILL/Frontend"
+LABEL org.opencontainers.image.source="https://github.com/EVE-KILL/Frontend"
 
 # Set workdir
 WORKDIR /app

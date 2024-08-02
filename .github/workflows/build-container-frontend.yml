@@ -1,0 +1,77 @@
+name: Build docker container for frontend
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - 'frontend/**'
+  workflow_dispatch:
+
+
+env:
+  REGISTRY: ghcr.io
+  IMAGE_NAME: eve-kill/frontend
+
+jobs:
+  build-frontend-container:
+    runs-on: ubuntu-latest
+    concurrency:
+      group: ${{ github.workflow }}-${{ github.ref }}
+      cancel-in-progress: true
+    permissions:
+      contents: read
+      packages: write
+      id-token: write
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          submodules: true
+          fetch-depth: 0
+          ref: main
+
+      - name: Get submodule commit hash
+        id: short_commit
+        run: |
+          cd frontend
+          SUBMODULE_COMMIT_HASH=$(git rev-parse --short HEAD)
+          echo "::set-output name=hash::$SUBMODULE_COMMIT_HASH"
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@aa33708b10e362ff993539393ff100fa93ed6a27 # v3.5.0
+
+      - name: Log into registry ${{ env.REGISTRY }}
+        if: github.event_name != 'pull_request'
+        uses: docker/login-action@9780b0c442fbb1117ed29e0efdff1e18412f7567 # v3.3.0
+        with:
+          registry: ${{ env.REGISTRY }}
+          username: ${{ github.actor }}
+          password: ${{ secrets.REPO_ACCESS_TOKEN }}
+
+      - name: Extract Docker metadata
+        id: meta
+        uses: docker/metadata-action@8e5442c4ef9f78752691e2d8f8d19755c6f78e81 # v5.5.1
+        with:
+          images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
+          tags: |
+            latest
+            ${{ steps.short_commit.outputs.hash }}
+
+      - name: Copy the docker folder into the build context
+        run: cp -r docker/ frontend/.docker
+
+      - name: Build and push Docker image
+        id: build-and-push
+        uses: docker/build-push-action@5176d81f87c23d6fc96624dfdbcd9f3830bbe445 # v6.5.0
+        with:
+          file: docker/node.Dockerfile
+          context: frontend/
+          push: ${{ github.event_name != 'pull_request' }}
+          tags: ${{ steps.meta.outputs.tags }}
+          labels: ${{ steps.meta.outputs.labels }}
+          #platforms: linux/amd64,linux/arm64
+          platforms: linux/amd64
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
