@@ -6,16 +6,67 @@ on:
       - main
     paths:
       - 'frontend/**'
+  repository_dispatch:
+    types: [update-frontend]
   workflow_dispatch:
-
 
 env:
   REGISTRY: ghcr.io
   IMAGE_NAME: eve-kill/frontend
 
 jobs:
+  update-frontend-submodule:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Log Payload
+        run: |
+          echo "Received Payload:"
+          echo "================="
+          echo "Submodule: ${{ github.event.client_payload.submodule }}"
+          echo "Environment: ${{ github.event.client_payload.environment }}"
+          echo "Commit: ${{ github.event.client_payload.commit }}"
+
+      - name: Checkout Repo
+        uses: actions/checkout@v4
+        with:
+          submodules: true
+          fetch-depth: 0
+          ref: main
+
+      - name: Identify the submodule to update
+        id: submodule
+        run: |
+          echo "SUBMODULE=${{ github.event.client_payload.submodule }}" >> $GITHUB_ENV
+          echo "COMMIT=${{ github.event.client_payload.commit }}" >> $GITHUB_ENV
+          echo "TARGET_BRANCH=main" >> $GITHUB_ENV
+
+      - name: Update submodule
+        run: |
+          # Checkout the target branch
+          git checkout ${TARGET_BRANCH}
+          # Setup the configuration for the git user
+          git config --global user.name "GitHub Actions"
+          git config --global user.email "noreply@eve-kill.com"
+          # Update the submodule
+          git submodule update --remote -- ${SUBMODULE}
+          # Enter the submodule
+          cd ${SUBMODULE}
+          # Checkout submodule to commit hash
+          git checkout ${COMMIT}
+          cd -
+          # Add the submodule changes
+          git add ${SUBMODULE}
+          # Commit the submodule changes
+          git commit -m "Updated ${SUBMODULE} submodule to commit ${COMMIT} on branch ${TARGET_BRANCH}"
+          # Push the submodule changes
+          git push origin ${TARGET_BRANCH}
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
   build-frontend-container:
     runs-on: ubuntu-latest
+    needs: update-frontend-submodule
     concurrency:
       group: ${{ github.workflow }}-${{ github.ref }}
       cancel-in-progress: true
@@ -100,7 +151,7 @@ jobs:
       - name: Get short commit hash
         id: short_commit
         run: |
-          cd killboard
+          cd frontend
           SUBMODULE_COMMIT_HASH=$(git rev-parse --short HEAD)
           echo "::set-output name=hash::$SUBMODULE_COMMIT_HASH"
 
