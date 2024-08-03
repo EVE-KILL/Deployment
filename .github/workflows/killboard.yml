@@ -1,4 +1,4 @@
-name: Build docker container for killboard
+name: Killboard - Build and Deploy
 
 on:
   push:
@@ -75,3 +75,40 @@ jobs:
           platforms: linux/amd64
           cache-from: type=gha
           cache-to: type=gha,mode=max
+
+  deploy-killboard:
+    runs-on: ubuntu-latest
+    needs: build-killboard-container
+    environment: production
+    concurrency:
+      group: ${{ github.workflow }}-${{ github.ref }}
+      cancel-in-progress: true
+    permissions:
+      contents: read
+      packages: write
+      id-token: write
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Get short commit hash
+        id: short_commit
+        run: |
+          cd killboard
+          SUBMODULE_COMMIT_HASH=$(git rev-parse --short HEAD)
+          echo "::set-output name=hash::$SUBMODULE_COMMIT_HASH"
+
+      - name: Write kubeconfig
+        run: |
+          echo "${{ secrets.KUBERNETES_CONFIG }}" > /tmp/config
+
+      - name: Deploy
+        run: |
+          kubectl --kubeconfig=/tmp/config -n evekill rollout restart deployment/server
+          kubectl --kubeconfig=/tmp/config -n evekill rollout restart deployment/websocket
+          kubectl --kubeconfig=/tmp/config -n evekill rollout restart deployment/redisq
+          kubectl --kubeconfig=/tmp/config -n evekill rollout restart deployment/queue
+
+      - name: Remove kubeconfig
+        run: rm -f /tmp/config
