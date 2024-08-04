@@ -166,5 +166,29 @@ jobs:
         run: |
           kubectl --kubeconfig=/tmp/config -n evekill rollout restart deployment/frontend
 
+      - name: Wait for rollout to finish
+        run: |
+          kubectl --kubeconfig=/tmp/config -n evekill rollout status deployment/frontend
+
       - name: Remove kubeconfig
         run: rm -f /tmp/config
+
+  purge-cloudflare-cache:
+    runs-on: ubuntu-latest
+    needs: deploy-frontend
+    environment: production
+    concurrency:
+      group: ${{ github.workflow }}-${{ github.ref }}
+      cancel-in-progress: true
+    permissions:
+      contents: read
+      packages: write
+      id-token: write
+
+    steps:
+      - name: Purge Cloudflare Cache
+        uses: cloudflare/purge-cache-action@v1
+        with:
+          cloudflare-api-token: ${{ secrets.CLOUDFLARE_CACHE_PURGE_TOKEN }}
+          zone-id: ${{ secrets.CLOUDFLARE_ZONE_ID }}
+          purge-everything: true
