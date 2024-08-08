@@ -1,0 +1,62 @@
+name: Helm-Deploy
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - 'helm-chart/**'
+  workflow_dispatch:
+
+env:
+  REGISTRY: ghcr.io
+  IMAGE_NAME: eve-kill/killboard
+
+jobs:
+  deploy-killboard:
+    runs-on: ubuntu-latest
+    environment: production
+    concurrency:
+      group: ${{ github.workflow }}-${{ github.ref }}
+      cancel-in-progress: true
+    permissions:
+      contents: read
+      packages: write
+      id-token: write
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Write kubeconfig
+        run: |
+          echo "${{ secrets.KUBERNETES_CONFIG }}" > /tmp/config
+
+      - name: Helm Deploy
+        uses: vimeda/helm@v1.7.0
+        with:
+          release: evekill
+          namespace: evekill
+          chart: helm-chart/
+          token: '${{ github.token }}'
+          values: |
+            config:
+              sso:
+                prod:
+                  client_id: ${{ secrets.SSO_PROD_CLIENT_ID }}
+                  client_secret: ${{ secrets.SSO_PROD_CLIENT_SECRET }}
+                  callback_url: ${{ secrets.SSO_PROD_CALLBACK_URL }}
+              webhooks:
+                comments: ${{ secrets.WEBHOOKS_COMMENTS }}
+                esi_errors: ${{ secrets.WEBHOOKS_ESI_ERRORS }}
+                errors: ${{ secrets.WEBHOOKS_ERRORS }}
+                new_characters_found: ${{ secrets.WEBHOOKS_NEW_CHARACTERS_FOUND }}
+          value-files: >-
+          [
+            "values.yaml"
+          ]
+        env:
+          KUBECONFIG: /tmp/config
+
+      - name: Remove kubeconfig
+        run: rm -f /tmp/config
