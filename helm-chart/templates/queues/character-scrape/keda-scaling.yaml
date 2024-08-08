@@ -1,10 +1,10 @@
 apiVersion: keda.sh/v1alpha1
 kind: ScaledObject
 metadata:
-  name: queue-alliance
+  name: queue-character-scrape
 spec:
   scaleTargetRef:
-    name: queue-alliance
+    name: queue-character-scrape
   pollingInterval: 5
   cooldownPeriod: 30
   minReplicaCount: 0
@@ -13,5 +13,5 @@ spec:
   - type: redis
     metadata:
       address: redis.evekill.svc.cluster.local:6379
-      listName: evekill:alliance
+      listName: evekill:character_scrape
       listLength: "5"

@@ -15,4 +15,3 @@ spec:
       address: redis.evekill.svc.cluster.local:6379
       listName: evekill:corporation
       listLength: "5"
-      activationListLength: "5"
