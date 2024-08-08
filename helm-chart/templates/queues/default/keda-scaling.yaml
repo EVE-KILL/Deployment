@@ -10,9 +10,9 @@ spec:
   minReplicaCount: 1
   maxReplicaCount: 5
   triggers:
-    - type: redis
-      metadata:
-        address: redis.evekill.svc.cluster.local:6379
-        listName: default
-        listLength: "1"
-        activationListLength: "1"
+  - metadata:
+      address: redis.evekill.svc.cluster.local:6379
+      listName: default
+      listLength: "1"
+      activationListLength: "1"
+    type: redis
