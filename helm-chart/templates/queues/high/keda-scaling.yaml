@@ -8,6 +8,6 @@ spec:
   triggers:
     - type: redis
       metadata:
-        address: redis:6379
+        address: redis.evekill.svc.cluster.local:6379
         listName: high
         listLength: "1"
