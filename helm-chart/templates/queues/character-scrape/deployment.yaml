@@ -1,7 +1,7 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: queue-character_scrape
+  name: queue-character-scrape
 spec:
   replicas: 1
   strategy:
@@ -11,11 +11,11 @@ spec:
       maxUnavailable: 0
   selector:
     matchLabels:
-      app: queue-character_scrape
+      app: queue-character-scrape
   template:
     metadata:
       labels:
-        app: queue-character_scrape
+        app: queue-character-scrape
     spec:
       serviceAccountName: evekill
       restartPolicy: Always
