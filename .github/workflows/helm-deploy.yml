@@ -28,10 +28,6 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Write kubeconfig
-        run: |
-          echo "${{ secrets.KUBERNETES_CONFIG }}" > /tmp/config
-
       - name: Helm Deploy
         uses: vimeda/helm@v1.7.0
         with:
@@ -53,7 +49,4 @@ jobs:
                 new_characters_found: ${{ secrets.WEBHOOKS_NEW_CHARACTERS_FOUND }}
           value-files: "helm-chart/values.yaml"
         env:
-          KUBECONFIG_FILE: /tmp/config
-
-      - name: Remove kubeconfig
-        run: rm -f /tmp/config
+          KUBECONFIG_FILE: '${{ secrets.KUBERNETES_CONFIG }}'
