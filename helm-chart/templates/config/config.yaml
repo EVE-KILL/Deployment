@@ -25,29 +25,22 @@ data:
       'meilisearch' => [
         'host' => 'meilisearch.evekill.svc.cluster.local:7700'
       ],
-      'twig' => [
-        'debug' => false,
-        'autoReload' => true,
-        'strictVariables' => false,
-        'optimizations' => -1,
-      ],
-      'cloudflare' => [
-        'token' => '',
-      ],
-      'fetcher' => [
-        'user-agent' => 'EK/1.0',
-      ],
-      'esi' => [
-        'user-agent' => 'EK/1.0',
-        'global-rate-limit' => 500,
-      ],
-      'evewho' => [
-        'user-agent' => 'EK/1.0',
-        'rate-limit' => 10,
+      'sso' => [
+        'dev' => [
+          'client_id' => '{{ .Values.config.sso.dev.client_id }}',
+          'client_secret' => '{{ .Values.config.sso.dev.client_secret }}',
+          'callback_url' => '{{ .Values.config.sso.dev.callback_url }}'
+        ],
+        'prod' => [
+          'client_id' => '{{ .Values.config.sso.prod.client_id }}',
+          'client_secret' => '{{ .Values.config.sso.prod.client_secret }}',
+          'callback_url' => '{{ .Values.config.sso.prod.callback_url }}'
+        ]
       ],
       'webhooks' => [
         'comments' => '{{ .Values.config.webhooks.comments }}',
         'esi-errors' => '{{ .Values.config.webhooks.esi_errors }}',
         'errors' => '{{ .Values.config.webhooks.errors }}',
+        'new-characters-found' => '{{ .Values.config.webhooks.new_characters_found }}',
       ]
     ];

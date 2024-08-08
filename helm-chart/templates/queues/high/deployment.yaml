@@ -1,7 +1,7 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: queue
+  name: queue-high
 spec:
   replicas: 3
   strategy:
@@ -11,11 +11,11 @@ spec:
       maxUnavailable: 0
   selector:
     matchLabels:
-      app: queue
+      app: queue-high
   template:
     metadata:
       labels:
-        app: queue
+        app: queue-high
     spec:
       serviceAccountName: evekill
       restartPolicy: Always
@@ -25,7 +25,7 @@ spec:
             - php
             - bin/console
             - queue
-            - --workers=64
+            - high
           image: {{ .Values.queue.image }}:{{ .Values.queue.version }}
           imagePullPolicy: {{ .Values.imagePullPolicy }}
           # If either limits or requests are enabled, create a resources block
