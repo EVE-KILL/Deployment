@@ -1,10 +1,10 @@
 apiVersion: keda.sh/v1alpha1
 kind: ScaledObject
 metadata:
-  name: queue-high
+  name: queue-alliance
 spec:
   scaleTargetRef:
-    name: queue-high
+    name: queue-alliance
   pollingInterval: 5
   cooldownPeriod: 30
   minReplicaCount: 1
@@ -13,6 +13,6 @@ spec:
     - type: redis
       metadata:
         address: redis.evekill.svc.cluster.local:6379
-        listName: high
+        listName: alliance
         listLength: "5"
         activationListLength: "5"
