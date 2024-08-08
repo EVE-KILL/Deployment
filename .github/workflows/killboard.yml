@@ -127,8 +127,8 @@ jobs:
           labels: ${{ steps.meta.outputs.labels }}
           #platforms: linux/amd64,linux/arm64
           platforms: linux/amd64
-          cache-from: type=gha,scope=global
-          cache-to: type=gha,mode=max,scope=global
+          cache-from: type=gha,scope=killboard
+          cache-to: type=gha,mode=max,scope=killboard
 
   deploy-killboard:
     runs-on: ubuntu-latest
