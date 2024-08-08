@@ -8,7 +8,7 @@ data:
     <?php
 
     return [
-      'development' => true, // Tells Whoops to show errors or not
+      'development' => false,
       'mongodb' => [
         'hosts' => [
           'evekill-mongodb-0.evekill-mongodb-headless.evekill.svc.cluster.local:27017',
@@ -26,11 +26,6 @@ data:
         'host' => 'meilisearch.evekill.svc.cluster.local:7700'
       ],
       'sso' => [
-        'dev' => [
-          'client_id' => '{{ .Values.config.sso.dev.client_id }}',
-          'client_secret' => '{{ .Values.config.sso.dev.client_secret }}',
-          'callback_url' => '{{ .Values.config.sso.dev.callback_url }}'
-        ],
         'prod' => [
           'client_id' => '{{ .Values.config.sso.prod.client_id }}',
           'client_secret' => '{{ .Values.config.sso.prod.client_secret }}',
