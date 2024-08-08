@@ -162,7 +162,7 @@ jobs:
           kubectl --kubeconfig=/tmp/config -n evekill rollout restart deployment/server
           kubectl --kubeconfig=/tmp/config -n evekill rollout restart deployment/websocket
           kubectl --kubeconfig=/tmp/config -n evekill rollout restart deployment/redisq
-          kubectl --kubeconfig=/tmp/config -n evekill rollout restart deployment/queue
+          kubectl --kubeconfig=/tmp/config -n evekill rollout restart deployment/queue-high
 
       - name: Remove kubeconfig
         run: rm -f /tmp/config
