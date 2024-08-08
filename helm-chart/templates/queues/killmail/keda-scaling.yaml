@@ -15,3 +15,4 @@ spec:
         address: redis.evekill.svc.cluster.local:6379
         listName: killmail
         listLength: "1"
+        activationListLength: "1"
