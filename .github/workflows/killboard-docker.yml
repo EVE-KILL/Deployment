@@ -1,4 +1,4 @@
-name: Killboard - Build and Deploy
+name: Killboard - Build on dockerfile changes and deploy
 
 on:
   push:
