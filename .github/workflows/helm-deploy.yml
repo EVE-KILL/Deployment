@@ -53,7 +53,7 @@ jobs:
                 new_characters_found: ${{ secrets.WEBHOOKS_NEW_CHARACTERS_FOUND }}
           value-files: "helm-chart/values.yaml"
         env:
-          KUBECONFIG: /tmp/config
+          KUBECONFIG_FILE: /tmp/config
 
       - name: Remove kubeconfig
         run: rm -f /tmp/config
