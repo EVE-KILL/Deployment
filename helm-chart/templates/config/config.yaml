@@ -9,6 +9,7 @@ data:
 
     return [
       'development' => false,
+      'ws_token' => '{{ .Values.config.ws_token }}',
       'mongodb' => [
         'hosts' => [
           'evekill-mongodb-0.evekill-mongodb-headless.evekill.svc.cluster.local:27017',

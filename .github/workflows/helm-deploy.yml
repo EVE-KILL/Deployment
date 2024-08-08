@@ -36,6 +36,7 @@ jobs:
           chart: helm-chart/
           token: '${{ github.token }}'
           values: |
+            ws_token: ${{ secrets.WS_TOKEN }}
             config:
               sso:
                 prod:
