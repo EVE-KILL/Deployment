@@ -5,9 +5,13 @@ metadata:
 spec:
   scaleTargetRef:
     name: queue-character
+  pollingInterval: 5
+  cooldownPeriod: 30
+  minReplicaCount: 1
+  maxReplicaCount: 10
   triggers:
     - type: redis
       metadata:
         address: redis.evekill.svc.cluster.local:6379
         listName: character
-        listLength: "1"
+        listLength: "5"

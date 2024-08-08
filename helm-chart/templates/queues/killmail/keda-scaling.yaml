@@ -5,6 +5,10 @@ metadata:
 spec:
   scaleTargetRef:
     name: queue-killmail
+  pollingInterval: 5
+  cooldownPeriod: 30
+  minReplicaCount: 1
+  maxReplicaCount: 50
   triggers:
     - type: redis
       metadata:

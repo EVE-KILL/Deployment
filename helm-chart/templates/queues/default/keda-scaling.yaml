@@ -5,6 +5,10 @@ metadata:
 spec:
   scaleTargetRef:
     name: queue-default
+  pollingInterval: 5
+  cooldownPeriod: 30
+  minReplicaCount: 1
+  maxReplicaCount: 5
   triggers:
     - type: redis
       metadata:

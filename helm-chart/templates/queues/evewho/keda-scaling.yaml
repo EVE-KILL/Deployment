@@ -5,9 +5,13 @@ metadata:
 spec:
   scaleTargetRef:
     name: queue-evewho
+  pollingInterval: 5
+  cooldownPeriod: 30
+  minReplicaCount: 1
+  maxReplicaCount: 3
   triggers:
     - type: redis
       metadata:
         address: redis.evekill.svc.cluster.local:6379
         listName: evewho
-        listLength: "1"
+        listLength: "5"
