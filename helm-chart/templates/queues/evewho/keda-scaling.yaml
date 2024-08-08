@@ -1,0 +1,13 @@
+apiVersion: keda.sh/v1alpha1
+kind: ScaledObject
+metadata:
+  name: queue-evewho
+spec:
+  scaleTargetRef:
+    name: queue-evewho
+  triggers:
+    - type: redis
+      metadata:
+        address: redis.evekill.svc.cluster.local:6379
+        listName: evewho
+        listLength: "1"

@@ -1,0 +1,13 @@
+apiVersion: keda.sh/v1alpha1
+kind: ScaledObject
+metadata:
+  name: queue-websocket
+spec:
+  scaleTargetRef:
+    name: queue-websocket
+  triggers:
+    - type: redis
+      metadata:
+        address: redis.evekill.svc.cluster.local:6379
+        listName: websocket
+        listLength: "1"

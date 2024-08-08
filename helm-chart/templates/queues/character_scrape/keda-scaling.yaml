@@ -1,0 +1,13 @@
+apiVersion: keda.sh/v1alpha1
+kind: ScaledObject
+metadata:
+  name: queue-character_scrape
+spec:
+  scaleTargetRef:
+    name: queue-character_scrape
+  triggers:
+    - type: redis
+      metadata:
+        address: redis.evekill.svc.cluster.local:6379
+        listName: character_scrape
+        listLength: "1"

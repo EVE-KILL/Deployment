@@ -1,0 +1,13 @@
+apiVersion: keda.sh/v1alpha1
+kind: ScaledObject
+metadata:
+  name: queue-low
+spec:
+  scaleTargetRef:
+    name: queue-low
+  triggers:
+    - type: redis
+      metadata:
+        address: redis.evekill.svc.cluster.local:6379
+        listName: low
+        listLength: "1"

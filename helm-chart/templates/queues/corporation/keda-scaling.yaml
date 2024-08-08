@@ -1,0 +1,13 @@
+apiVersion: keda.sh/v1alpha1
+kind: ScaledObject
+metadata:
+  name: queue-corporation
+spec:
+  scaleTargetRef:
+    name: queue-corporation
+  triggers:
+    - type: redis
+      metadata:
+        address: redis.evekill.svc.cluster.local:6379
+        listName: corporation
+        listLength: "1"
