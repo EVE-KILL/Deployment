@@ -51,7 +51,7 @@ jobs:
                 esi_errors: ${{ secrets.WEBHOOKS_ESI_ERRORS }}
                 errors: ${{ secrets.WEBHOOKS_ERRORS }}
                 new_characters_found: ${{ secrets.WEBHOOKS_NEW_CHARACTERS_FOUND }}
-          value-files: "values.yaml"
+          value-files: "helm-chart/values.yaml"
         env:
           KUBECONFIG: /tmp/config
 
