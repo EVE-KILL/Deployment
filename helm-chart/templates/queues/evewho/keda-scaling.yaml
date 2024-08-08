@@ -5,8 +5,6 @@ metadata:
 spec:
   scaleTargetRef:
     name: queue-evewho
-  pollingInterval: 5
-  cooldownPeriod: 30
   minReplicaCount: 0
   maxReplicaCount: 2
   triggers:

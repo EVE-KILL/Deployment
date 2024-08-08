@@ -6,8 +6,6 @@ spec:
   scaleTargetRef:
     name: queue-low
     kind: Deployment
-  pollingInterval: 5
-  cooldownPeriod: 30
   minReplicaCount: 0
   maxReplicaCount: 5
   triggers:
