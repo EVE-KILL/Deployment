@@ -28,6 +28,8 @@ spec:
           ports:
             - containerPort: 6379
               protocol: TCP
+            - containerPort: 8001
+              protocol: TCP
           volumeMounts:
             - name: redis-data
               mountPath: /data
