@@ -23,11 +23,8 @@ spec:
       restartPolicy: Always
       containers:
         - name: redis
-          image: library/redis:latest
+          image: redis/redis-stack
           imagePullPolicy: {{ .Values.imagePullPolicy }}
-          command:
-            - redis-server
-            - /etc/redis/redis.conf
           ports:
             - containerPort: 6379
               protocol: TCP
@@ -35,13 +32,13 @@ spec:
             - name: redis-data
               mountPath: /data
             - name: redis-config
-              mountPath: /etc/redis/redis.conf
+              mountPath: /etc/redis-stack.conf
               subPath: redis.conf
               readOnly: true
       volumes:
         - name: redis-data
-          emptyDir:
-            sizeLimit: 512Mi
+          persistentVolumeClaim:
+            claimName: redis
         - name: redis-config
           configMap:
             name: redis-config

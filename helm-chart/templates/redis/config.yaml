@@ -5,7 +5,20 @@ metadata:
   name: redis-config
 data:
   redis.conf: |-
-    appendonly no
-    save ""
+    port 6379
+    daemonize no
     maxmemory {{ .Values.redis.maxmemory }}
     maxmemory-policy {{ .Values.redis.maxmemoryPolicy }}
+
+    loadmodule /opt/redis-stack/lib/rediscompat.so
+    loadmodule /opt/redis-stack/lib/redisearch.so
+    loadmodule /opt/redis-stack/lib/redistimeseries.so
+    loadmodule /opt/redis-stack/lib/rejson.so
+    loadmodule /opt/redis-stack/lib/redisbloom.so
+    loadmodule /opt/redis-stack/lib/redisgears.so v8-plugin-path /opt/redis-stack/lib/libredisgears_v8_plugin.so
+
+    # Persist data to disk
+    appendonly yes
+    dir /data
+    dbfilename dump.rdb
+    save 60 1
