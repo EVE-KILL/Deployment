@@ -23,7 +23,7 @@ spec:
       restartPolicy: Always
       containers:
         - name: redis
-          image: redis/redis-stack
+          image: redis/redis-stack:latest
           imagePullPolicy: {{ .Values.imagePullPolicy }}
           ports:
             - containerPort: 6379
