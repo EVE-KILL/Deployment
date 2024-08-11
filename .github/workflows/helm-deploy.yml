@@ -37,6 +37,8 @@ jobs:
           token: '${{ github.token }}'
           values: |
             ws_token: ${{ secrets.WS_TOKEN }}
+            ollama:
+              token: ${{ secrets.OLLAMA_TOKEN }}
             config:
               sso:
                 prod:

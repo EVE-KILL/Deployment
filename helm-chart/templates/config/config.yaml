@@ -10,6 +10,11 @@ data:
     return [
       'development' => false,
       'ws_token' => '{{ .Values.config.ws_token }}',
+      'ollama' => [
+        'url' => 'http://127.0.0.1:11434/api/',
+        'token' => '{{ .Values.ollama.token }}',
+        'model' => 'llama3.1'
+      ],
       'mongodb' => [
         'hosts' => [
           'evekill-mongodb-0.evekill-mongodb-headless.evekill.svc.cluster.local:27017',
