@@ -1,5 +1,5 @@
 # syntax=docker/dockerfile:1.4
-FROM node:22 AS build
+FROM oven/bun:latest AS build
 
 # Set workdir
 WORKDIR /app
@@ -9,11 +9,11 @@ COPY . /app
 
 # Install dependencies and build application
 RUN \
-    yarn install && \
-    yarn run build
+    bun install && \
+    bun run build
 
 # syntax=docker/dockerfile:1.4
-FROM node:22
+FROM oven/bun:latest
 
 LABEL org.opencontainers.image.source="https://github.com/EVE-KILL/Frontend"
 
@@ -26,10 +26,9 @@ COPY --from=build /app/copyESFDataToStatic.sh /app
 COPY --from=build /app/static /app
 COPY --from=build /app/build /app
 COPY --from=build /app/package.json /app
-COPY --from=build /app/yarn.lock /app
-COPY --from=build /app/server.js /app
+COPY --from=build /app/bun.lockb /app
 
-RUN yarn install --production && \
+RUN bun install --production && \
     rm -f .npmrc
 
 # Expose the port
@@ -38,4 +37,4 @@ EXPOSE 3000
 # Set the default BASE_URL
 ENV VITE_BASE_URL=https://eve-kill.com
 
-CMD [ "node", "server.js" ]
+CMD [ "bun", "--bun", "index.js" ]
