@@ -4,4 +4,4 @@ metadata:
   name: rabbitmq-enabled-plugins
 data:
   enabled_plugins: |
-    [rabbitmq_web_stomp, rabbitmq_stomp, rabbitmq_management].
+    [rabbitmq_web_stomp, rabbitmq_stomp, rabbitmq_management, rabbitmq_management_agent].
