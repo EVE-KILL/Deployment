@@ -28,6 +28,8 @@ spec:
           ports:
             - containerPort: 15672
               protocol: TCP
+            - containerPort: 15674
+              protocol: TCP
             - containerPort: 61613
               protocol: TCP
           volumeMounts:

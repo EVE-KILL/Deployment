@@ -14,3 +14,7 @@ spec:
       port: 61613
       protocol: TCP
       targetPort: 61613
+    - name: web-stomp
+      port: 15674
+      protocol: TCP
+      targetPort: 15674
