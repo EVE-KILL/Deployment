@@ -8,8 +8,9 @@ spec:
   minReplicaCount: 1
   maxReplicaCount: 5
   triggers:
-  - type: redis
+  - type: rabbitmq
     metadata:
-      address: redis.evekill.svc.cluster.local:6379
-      listName: evekill:websocket
-      listLength: "25"
+      host: amqp://rabbitmq.evekill.svc.cluster.local:5672/
+      protocol: auto
+      mode: QueueLength
+      queueName: websocket

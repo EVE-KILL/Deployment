@@ -8,8 +8,9 @@ spec:
   minReplicaCount: 0
   maxReplicaCount: 10
   triggers:
-  - type: redis
+  - type: rabbitmq
     metadata:
-      address: redis.evekill.svc.cluster.local:6379
-      listName: evekill:corporation
-      listLength: "5"
+      host: amqp://rabbitmq.evekill.svc.cluster.local:5672/
+      protocol: auto
+      mode: QueueLength
+      queueName: corporation
