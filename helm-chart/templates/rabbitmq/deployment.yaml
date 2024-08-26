@@ -1,0 +1,45 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: rabbitmq
+spec:
+  replicas: 1
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 1
+  selector:
+    matchLabels:
+      app: rabbitmq
+  template:
+    metadata:
+      labels:
+        app: rabbitmq
+        app.kubernetes.io/name: rabbitmq
+        app.kubernetes.io/component: rabbitmq
+    spec:
+      serviceAccountName: evekill
+      restartPolicy: Always
+      containers:
+        - name: rabbitmq
+          image: library/rabbitmq:latest
+          imagePullPolicy: {{ .Values.imagePullPolicy }}
+          ports:
+            - containerPort: 15672
+              protocol: TCP
+            - containerPort: 61613
+              protocol: TCP
+          volumeMounts:
+            - name: rabbitmq
+              mountPath: /var/lib/rabbitmq
+            - name: enabled-plugins
+              mountPath: /etc/rabbitmq/enabled_plugins
+              subPath: enabled_plugins
+      volumes:
+        - name: rabbitmq
+          persistentVolumeClaim:
+            claimName: rabbitmq
+        - name: enabled-plugins
+          configMap:
+            name: rabbitmq-enabled-plugins
