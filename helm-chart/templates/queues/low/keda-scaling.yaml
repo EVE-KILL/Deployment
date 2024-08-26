@@ -5,14 +5,13 @@ metadata:
 spec:
   scaleTargetRef:
     name: queue-low
-    kind: Deployment
   minReplicaCount: 0
   maxReplicaCount: 5
   triggers:
   - type: rabbitmq
     metadata:
-      host: amqp://rabbitmq.evekill.svc.cluster.local:5672/
-      protocol: amqp
+      host: http://keda:keda@rabbitmq.evekill.svc.cluster.local:15672/
       mode: QueueLength
+      protocol: auto
       value: "1"
       queueName: low
