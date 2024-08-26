@@ -31,6 +31,12 @@ data:
       'meilisearch' => [
         'host' => 'meilisearch.evekill.svc.cluster.local:7700'
       ],
+      'rabbitmq' => [
+        'host' => 'rabbitmq.evekill.svc.cluster.local',
+        'port' => 5672,
+        'user' => 'evekill',
+        'password' => '{{ .Values.rabbitmq.queuePassword }}',
+      ],
       'sso' => [
         'prod' => [
           'client_id' => '{{ .Values.config.sso.prod.client_id }}',

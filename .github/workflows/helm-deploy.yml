@@ -50,6 +50,8 @@ jobs:
                 esi_errors: ${{ secrets.WEBHOOKS_ESI_ERRORS }}
                 errors: ${{ secrets.WEBHOOKS_ERRORS }}
                 new_characters_found: ${{ secrets.WEBHOOKS_NEW_CHARACTERS_FOUND }}
+              rabbitmq:
+                queuePassword: ${{ secrets.RABBITMQ_QUEUE_PASSWORD }}
           value-files: "helm-chart/values.yaml"
         env:
           KUBECONFIG_FILE: '${{ secrets.KUBERNETES_CONFIG }}'

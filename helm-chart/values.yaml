@@ -118,3 +118,6 @@ mongodb:
     enabled: false
   readinessProbe:
     enabled: true
+
+rabbitmq:
+  queuePassword: evekill
