@@ -109,5 +109,4 @@ WORKDIR /app
 ARG PHP_VERSION="8.3"
 ENV PHP_VERSION=${PHP_VERSION}
 EXPOSE 9201
-#CMD ["php", "/app/bin/console", "server"]
 CMD ["/app/rr", "serve", "-w", "/app"]

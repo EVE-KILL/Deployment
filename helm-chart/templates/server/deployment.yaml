@@ -22,10 +22,10 @@ spec:
       containers:
         - name: server
           command:
-            - php
-            - bin/console
-            - server:http
-            - --host=0.0.0.0
+            - /app/rr
+            - serve
+            - -w
+            - /app
           image: {{ .Values.server.image }}:{{ .Values.server.version }}
           imagePullPolicy: {{ .Values.imagePullPolicy }}
           {{- if or (eq .Values.server.resources.limits.enabled true) (eq .Values.server.resources.requests.enabled true) }}
