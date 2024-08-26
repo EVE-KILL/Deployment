@@ -88,7 +88,9 @@ RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local
 
 # Install packages
 #RUN COMPOSER_ALLOW_SUPERUSER=1 composer install --no-dev --no-interaction --no-suggest --optimize-autoloader --apcu-autoloader
-RUN COMPOSER_ALLOW_SUPERUSER=1 composer install --no-interaction --no-suggest --optimize-autoloader --apcu-autoloader
+RUN \
+    COMPOSER_ALLOW_SUPERUSER=1 composer install --no-interaction --no-suggest --optimize-autoloader --apcu-autoloader && \
+    php vendor/bin/rr get-binary
 
 # Copy in the module configurations
 COPY .docker/config/modules/* /etc/php/${PHP_VERSION}/mods-available/
@@ -107,4 +109,5 @@ WORKDIR /app
 ARG PHP_VERSION="8.3"
 ENV PHP_VERSION=${PHP_VERSION}
 EXPOSE 9201
-CMD ["php", "/app/bin/console", "server"]
+#CMD ["php", "/app/bin/console", "server"]
+CMD ["/app/rr", "serve", "-w", "/app"]
