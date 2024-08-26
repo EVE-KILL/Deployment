@@ -21,7 +21,7 @@ spec:
     spec:
       serviceAccountName: evekill
       restartPolicy: Always
-      hostname: rabbitmq
+      hostname: rabbitmq  # Static hostname
       containers:
         - name: rabbitmq
           image: library/rabbitmq:latest
@@ -36,13 +36,16 @@ spec:
           volumeMounts:
             - name: rabbitmq
               mountPath: /var/lib/rabbitmq
-            - name: enabled-plugins
+            - name: rabbitmq-config
               mountPath: /etc/rabbitmq/enabled_plugins
               subPath: enabled_plugins
+            - name: rabbitmq-config
+              mountPath: /etc/rabbitmq/conf.d/management_agent.disable_metrics_collector.conf
+              subPath: management_agent.disable_metrics_collector.conf
       volumes:
         - name: rabbitmq
           persistentVolumeClaim:
             claimName: rabbitmq
-        - name: enabled-plugins
+        - name: rabbitmq-config
           configMap:
-            name: rabbitmq-enabled-plugins
+            name: rabbitmq-config
