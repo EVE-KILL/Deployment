@@ -14,5 +14,5 @@ spec:
       protocol: auto
       mode: QueueLength
       queueName: character
-      value: "10.10"
+      value: "1"
       vhostName: /
