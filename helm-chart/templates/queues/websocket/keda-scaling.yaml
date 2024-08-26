@@ -10,9 +10,8 @@ spec:
   triggers:
   - type: rabbitmq
     metadata:
-      host: amqp://rabbitmq.evekill.svc.cluster.local:5672
-      protocol: auto
+      host: amqp://rabbitmq.evekill.svc.cluster.local:5672/
+      protocol: amqp
       mode: QueueLength
-      queueName: websocket
       value: "1"
-      vhostName: /
+      queueName: websocket
