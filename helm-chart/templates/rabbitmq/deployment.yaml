@@ -21,6 +21,7 @@ spec:
     spec:
       serviceAccountName: evekill
       restartPolicy: Always
+      hostname: rabbitmq
       containers:
         - name: rabbitmq
           image: library/rabbitmq:latest
