@@ -67,11 +67,7 @@ RUN \
         php${PHP_VERSION}-uploadprogress \
         php${PHP_VERSION}-sqlite3 \
         php${PHP_VERSION}-gmp \
-        php${PHP_VERSION}-dev \
-        libcurl4-openssl-dev \
     && \
-    pecl install --configureoptions 'enable-openssl="yes" enable-hook-curl="yes"' openswoole && \
-    echo "extension=openswoole.so" > /etc/php/${PHP_VERSION}/cli/conf.d/20-openswoole.ini && \
     apt autoremove -y && \
     apt clean -y && \
     # Cleanup
