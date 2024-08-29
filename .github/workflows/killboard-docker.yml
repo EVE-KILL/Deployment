@@ -98,9 +98,16 @@ jobs:
           SUBMODULE_COMMIT_HASH=$(git rev-parse --short HEAD)
           echo "::set-output name=hash::$SUBMODULE_COMMIT_HASH"
 
-      - name: Write kubeconfig
+      - name: Tailscale
+        uses: tailscale/github-action@v2
+        with:
+          oauth-client-id: ${{ secrets.TS_OAUTH_CLIENT_ID }}
+          oauth-secret: ${{ secrets.TS_OAUTH_SECRET }}
+          tags: tag:ci
+
+      - name: Set up kubectl
         run: |
-          echo "${{ secrets.KUBERNETES_CONFIG }}" > /tmp/config
+          tailscale configure kubeconfig tailscale-operator
 
       - name: Deploy
         run: |
@@ -120,4 +127,4 @@ jobs:
           kubectl --kubeconfig=/tmp/config -n evekill rollout restart deployment/queue-websocket
 
       - name: Remove kubeconfig
-        run: rm -f /tmp/config
+        run: rm -f ~/.kube/config

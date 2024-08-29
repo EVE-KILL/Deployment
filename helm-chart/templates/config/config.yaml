@@ -17,22 +17,20 @@ data:
       ],
       'mongodb' => [
         'hosts' => [
-          'evekill-mongodb-0.evekill-mongodb-headless.evekill.svc.cluster.local:27017',
-          'evekill-mongodb-1.evekill-mongodb-headless.evekill.svc.cluster.local:27017',
-          'evekill-mongodb-2.evekill-mongodb-headless.evekill.svc.cluster.local:27017',
+          'mongodb.mongodb.svc.cluster.local:27017',
         ]
       ],
       'redis' => [
-        'host' =>'redis.evekill.svc.cluster.local',
+        'host' =>'redis.redis.svc.cluster.local',
         'port' => 6379,
         'password' => '',
         'database' => 0,
       ],
       'meilisearch' => [
-        'host' => 'meilisearch.evekill.svc.cluster.local:7700'
+        'host' => 'meilisearch.meilisearch.svc.cluster.local:7700'
       ],
       'rabbitmq' => [
-        'host' => 'rabbitmq.evekill.svc.cluster.local',
+        'host' => 'rabbitmq.rabbitmq.svc.cluster.local',
         'port' => 5672,
         'user' => 'evekill',
         'password' => '{{ .Values.rabbitmq.queuePassword }}',

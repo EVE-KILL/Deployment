@@ -1,9 +1,0 @@
-apiVersion: v1
-kind: ConfigMap
-metadata:
-  name: rabbitmq-config
-data:
-  enabled_plugins: |
-    [rabbitmq_web_stomp, rabbitmq_stomp, rabbitmq_management, rabbitmq_management_agent].
-  management_agent.disable_metrics_collector.conf: |
-    management_agent.disable_metrics_collector = false
