@@ -166,20 +166,20 @@ jobs:
 
       - name: Deploy
         run: |
-          kubectl --kubeconfig=/tmp/config -n evekill rollout restart deployment/server
-          kubectl --kubeconfig=/tmp/config -n evekill rollout restart deployment/websocket
-          kubectl --kubeconfig=/tmp/config -n evekill rollout restart deployment/redisq
-          kubectl --kubeconfig=/tmp/config -n evekill rollout restart deployment/queue-alliance
-          kubectl --kubeconfig=/tmp/config -n evekill rollout restart deployment/queue-character
-          kubectl --kubeconfig=/tmp/config -n evekill rollout restart deployment/queue-character-scrape
-          kubectl --kubeconfig=/tmp/config -n evekill rollout restart deployment/queue-corporation
-          kubectl --kubeconfig=/tmp/config -n evekill rollout restart deployment/queue-default
-          kubectl --kubeconfig=/tmp/config -n evekill rollout restart deployment/queue-evewho
-          kubectl --kubeconfig=/tmp/config -n evekill rollout restart deployment/queue-high
-          kubectl --kubeconfig=/tmp/config -n evekill rollout restart deployment/queue-killmail
-          kubectl --kubeconfig=/tmp/config -n evekill rollout restart deployment/queue-low
-          kubectl --kubeconfig=/tmp/config -n evekill rollout restart deployment/queue-universe
-          kubectl --kubeconfig=/tmp/config -n evekill rollout restart deployment/queue-websocket
+          kubectl --kubeconfig=$HOME/.kube/config -n evekill rollout restart deployment/server
+          kubectl --kubeconfig=$HOME/.kube/config -n evekill rollout restart deployment/websocket
+          kubectl --kubeconfig=$HOME/.kube/config -n evekill rollout restart deployment/redisq
+          kubectl --kubeconfig=$HOME/.kube/config -n evekill rollout restart deployment/queue-alliance
+          kubectl --kubeconfig=$HOME/.kube/config -n evekill rollout restart deployment/queue-character
+          kubectl --kubeconfig=$HOME/.kube/config -n evekill rollout restart deployment/queue-character-scrape
+          kubectl --kubeconfig=$HOME/.kube/config -n evekill rollout restart deployment/queue-corporation
+          kubectl --kubeconfig=$HOME/.kube/config -n evekill rollout restart deployment/queue-default
+          kubectl --kubeconfig=$HOME/.kube/config -n evekill rollout restart deployment/queue-evewho
+          kubectl --kubeconfig=$HOME/.kube/config -n evekill rollout restart deployment/queue-high
+          kubectl --kubeconfig=$HOME/.kube/config -n evekill rollout restart deployment/queue-killmail
+          kubectl --kubeconfig=$HOME/.kube/config -n evekill rollout restart deployment/queue-low
+          kubectl --kubeconfig=$HOME/.kube/config -n evekill rollout restart deployment/queue-universe
+          kubectl --kubeconfig=$HOME/.kube/config -n evekill rollout restart deployment/queue-websocket
 
       - name: Remove kubeconfig
-        run: rm -f ~/.kube/config
+        run: rm -f $HOME/.kube/config
