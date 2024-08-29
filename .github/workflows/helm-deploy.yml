@@ -39,10 +39,6 @@ jobs:
         run: |
           tailscale configure kubeconfig tailscale-operator
 
-      - name: Validate kubeconfig
-        run: |
-          kubectl --kubeconfig=$HOME/.kube/config get po -A
-
       - name: Helm Deploy
         run: |
           helm --kubeconfig=$HOME/.kube/config upgrade --install evekill helm-chart/ \
