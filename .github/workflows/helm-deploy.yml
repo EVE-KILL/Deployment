@@ -41,7 +41,7 @@ jobs:
 
       - name: Validate kubeconfig
         run: |
-          kubectl --kubeconfig=/tmp/config get po -A
+          kubectl --kubeconfig=~/.kube/config get po -A
 
       - name: Helm Deploy
         uses: vimeda/helm@v1.7.0
