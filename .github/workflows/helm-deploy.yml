@@ -39,6 +39,10 @@ jobs:
         run: |
           tailscale configure kubeconfig tailscale-operator
 
+      -name: Validate kubeconfig
+        run: |
+          kubectl --kubeconfig=/tmp/config get po -A
+
       - name: Helm Deploy
         uses: vimeda/helm@v1.7.0
         with:
@@ -64,6 +68,8 @@ jobs:
                 errors: ${{ secrets.WEBHOOKS_ERRORS }}
                 new_characters_found: ${{ secrets.WEBHOOKS_NEW_CHARACTERS_FOUND }}
           value-files: "helm-chart/values.yaml"
+        env:
+          KUBECONFIG_FILE: '~/.kube/config'
 
       - name: Remove kubeconfig
         run: rm -f ~/.kube/config
