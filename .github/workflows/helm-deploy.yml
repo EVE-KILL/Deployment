@@ -44,32 +44,20 @@ jobs:
           kubectl --kubeconfig=$HOME/.kube/config get po -A
 
       - name: Helm Deploy
-        uses: vimeda/helm@v1.7.0
-        with:
-          release: evekill
-          namespace: evekill
-          chart: helm-chart/
-          token: '${{ github.token }}'
-          values: |
-            ws_token: ${{ secrets.WS_TOKEN }}
-            ollama:
-              token: ${{ secrets.OLLAMA_TOKEN }}
-            rabbitmq:
-              queuePassword: ${{ secrets.RABBITMQ_QUEUE_PASSWORD }}
-            config:
-              sso:
-                prod:
-                  client_id: ${{ secrets.SSO_PROD_CLIENT_ID }}
-                  client_secret: ${{ secrets.SSO_PROD_CLIENT_SECRET }}
-                  callback_url: ${{ secrets.SSO_PROD_CALLBACK_URL }}
-              webhooks:
-                comments: ${{ secrets.WEBHOOKS_COMMENTS }}
-                esi_errors: ${{ secrets.WEBHOOKS_ESI_ERRORS }}
-                errors: ${{ secrets.WEBHOOKS_ERRORS }}
-                new_characters_found: ${{ secrets.WEBHOOKS_NEW_CHARACTERS_FOUND }}
-          value-files: "helm-chart/values.yaml"
-        env:
-          KUBECONFIG_FILE: '$HOME/.kube/config'
+        run: |
+          helm --kubeconfig=$HOME/.kube/config upgrade --install evekill helm-chart/ \
+            --namespace evekill \
+            --set ws_token=${{ secrets.WS_TOKEN }} \
+            --set ollama.token=${{ secrets.OLLAMA_TOKEN }} \
+            --set rabbitmq.queuePassword=${{ secrets.RABBITMQ_QUEUE_PASSWORD }} \
+            --set config.sso.prod.client_id=${{ secrets.SSO_PROD_CLIENT_ID }} \
+            --set config.sso.prod.client_secret=${{ secrets.SSO_PROD_CLIENT_SECRET }} \
+            --set config.sso.prod.callback_url=${{ secrets.SSO_PROD_CALLBACK_URL }} \
+            --set config.webhooks.comments=${{ secrets.WEBHOOKS_COMMENTS }} \
+            --set config.webhooks.esi_errors=${{ secrets.WEBHOOKS_ESI_ERRORS }} \
+            --set config.webhooks.errors=${{ secrets.WEBHOOKS_ERRORS }} \
+            --set config.webhooks.new_characters_found=${{ secrets.WEBHOOKS_NEW_CHARACTERS_FOUND }} \
+            -f helm-chart/values.yaml
 
       - name: Remove kubeconfig
         run: rm -f $HOME/.kube/config
