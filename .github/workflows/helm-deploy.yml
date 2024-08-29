@@ -39,7 +39,7 @@ jobs:
         run: |
           tailscale configure kubeconfig tailscale-operator
 
-      -name: Validate kubeconfig
+      - name: Validate kubeconfig
         run: |
           kubectl --kubeconfig=/tmp/config get po -A
 
