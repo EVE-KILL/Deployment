@@ -9,7 +9,7 @@ data:
 
     return [
       'development' => false,
-      'logLevel' => 1,
+      'logLevel' => 0,
       'ws_token' => '{{ .Values.config.ws_token }}',
       'ollama' => [
         'url' => 'http://ollama.evekill.svc.cluster.local:11434/api/',
