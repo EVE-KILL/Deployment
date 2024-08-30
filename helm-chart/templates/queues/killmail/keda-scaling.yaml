@@ -6,7 +6,7 @@ spec:
   scaleTargetRef:
     name: queue-killmail
   minReplicaCount: 1
-  maxReplicaCount: 50
+  maxReplicaCount: 20
   triggers:
   - type: rabbitmq
     metadata:
