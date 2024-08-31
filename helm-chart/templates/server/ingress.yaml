@@ -6,6 +6,11 @@ metadata:
     cert-manager.io/cluster-issuer: letsencrypt-prod
     nginx.ingress.kubernetes.io/ssl-redirect: "true"
     nginx.ingress.kubernetes.io/backend-protocol: "http"
+    nginx.ingress.kubernetes.io/proxy-read-timeout: "3600"
+    nginx.ingress.kubernetes.io/proxy-send-timeout: "3600"
+    nginx.ingress.kubernetes.io/configuration-snippet: |
+      proxy_set_header Upgrade "websocket";
+      proxy_set_header Connection "Upgrade";
 spec:
   ingressClassName: nginx
   tls:
@@ -30,23 +35,3 @@ spec:
                 name: frontend
                 port:
                   number: 3000
-    - host: images.eve-kill.com
-      http:
-        paths:
-          - path: /
-            pathType: Prefix
-            backend:
-              service:
-                name: frontend
-                port:
-                  number: 3000
-    - host: ws.eve-kill.com
-      http:
-        paths:
-          - path: /
-            pathType: Prefix
-            backend:
-              service:
-                name: websocket
-                port:
-                  number: 9201
