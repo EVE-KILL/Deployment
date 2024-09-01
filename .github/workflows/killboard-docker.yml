@@ -112,7 +112,6 @@ jobs:
       - name: Deploy
         run: |
           kubectl --kubeconfig=$HOME/.kube/config -n evekill rollout restart deployment/server
-          kubectl --kubeconfig=$HOME/.kube/config -n evekill rollout restart deployment/websocket
           kubectl --kubeconfig=$HOME/.kube/config -n evekill rollout restart deployment/redisq
           kubectl --kubeconfig=$HOME/.kube/config -n evekill rollout restart deployment/queue-alliance
           kubectl --kubeconfig=$HOME/.kube/config -n evekill rollout restart deployment/queue-character
@@ -124,7 +123,6 @@ jobs:
           kubectl --kubeconfig=$HOME/.kube/config -n evekill rollout restart deployment/queue-killmail
           kubectl --kubeconfig=$HOME/.kube/config -n evekill rollout restart deployment/queue-low
           kubectl --kubeconfig=$HOME/.kube/config -n evekill rollout restart deployment/queue-universe
-          kubectl --kubeconfig=$HOME/.kube/config -n evekill rollout restart deployment/queue-websocket
 
       - name: Remove kubeconfig
         run: rm -f $HOME/.kube/config
