@@ -25,3 +25,6 @@ spec:
           imagePullPolicy: {{ .Values.imagePullPolicy }}
           ports:
             - containerPort: 3000
+          env:
+            - name: SENTRY_DSN
+              value: {{ .Values.sentryDSNFrontend }}

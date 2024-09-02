@@ -1,5 +1,6 @@
 namespace: evekill
 imagePullPolicy: Always
+sentryDSNFrontend: ""
 sentryDSN: ""
 sentryRelay:
   dsn: ""
