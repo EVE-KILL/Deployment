@@ -43,6 +43,7 @@ jobs:
         run: |
           helm --kubeconfig=$HOME/.kube/config upgrade --install evekill helm-chart/ \
             --namespace evekill \
+            --set sentryDSN=${{ secrets.SENTRY_DSN_BACKEND }} \
             --set ws_token=${{ secrets.WS_TOKEN }} \
             --set ollama.token=${{ secrets.OLLAMA_TOKEN }} \
             --set rabbitmq.queuePassword=${{ secrets.RABBITMQ_QUEUE_PASSWORD }} \

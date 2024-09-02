@@ -45,6 +45,9 @@ spec:
               memory: {{ .Values.server.resources.requests.memory }}
             {{- end }}
           {{- end }}
+          env:
+            - name: SENTRY_DSN
+              value: {{ .Values.sentryDSN }}
           ports:
             - containerPort: 9201
           volumeMounts:

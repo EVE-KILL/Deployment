@@ -45,6 +45,9 @@ spec:
               memory: {{ .Values.redisq.resources.requests.memory }}
             {{- end }}
           {{- end }}
+          env:
+            - name: SENTRY_DSN
+              value: {{ .Values.sentryDSN }}
           volumeMounts:
             - name: evekill-config
               mountPath: /app/config/config.php

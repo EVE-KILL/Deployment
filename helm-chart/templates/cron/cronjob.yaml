@@ -39,6 +39,9 @@ spec:
                 - php
                 - bin/console
                 - cron
+              env:
+                - name: SENTRY_DSN
+                  value: {{ .Values.sentryDSN }}
               volumeMounts:
                 - name: evekill-config
                   mountPath: /app/config/config.php

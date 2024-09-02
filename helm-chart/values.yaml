@@ -1,5 +1,6 @@
 namespace: evekill
 imagePullPolicy: Always
+sentryDSN:
 
 ingress:
   clusterIssuer: letsencrypt
