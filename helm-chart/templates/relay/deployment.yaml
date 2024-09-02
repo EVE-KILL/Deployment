@@ -27,6 +27,9 @@ spec:
             - run
           ports:
             - containerPort: 3000
+          env:
+            - name: RELAY_PORT
+              value: 3000
           volumeMounts:
             - name: relay-config
               mountPath: /work/.relay/credentials.json
