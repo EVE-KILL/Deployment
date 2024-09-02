@@ -16,6 +16,6 @@ data:
       dsn: {{ .Values.sentryRelay.dsn }}
     relay:
       mode: managed
-      upstream: https://sentry.io/
+      upstream: {{ .Values.sentryRelay.upstream }}
       host: 127.0.0.1
       port: 3000
