@@ -1,0 +1,21 @@
+# Redis config stored as a configmap
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: relay-config
+data:
+  credentials.json: |-
+    {
+      "secret_key": "{{ .Values.sentryRelay.secretKey }}",
+      "public_key": "{{ .Values.sentryRelay.publicKey }}",
+      "id": "{{ .Values.sentryRelay.id }}"
+    }
+  config.yml: |-
+    sentry:
+      enabled: true
+      dsn: {{ .Values.sentryRelay.dsn }}
+    relay:
+      mode: managed
+      upstream: https://sentry.io/
+      host: 127.0.0.1
+      port: 3000

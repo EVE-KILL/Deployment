@@ -1,6 +1,11 @@
 namespace: evekill
 imagePullPolicy: Always
-sentryDSN:
+sentryDSN: "http://sentry.evekill.svc.cluster.local:3000"
+sentryRelay:
+  dsn: ""
+  secretKey: ""
+  publicKey: ""
+  id: ""
 
 ingress:
   clusterIssuer: letsencrypt
