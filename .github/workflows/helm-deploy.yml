@@ -43,7 +43,9 @@ jobs:
         run: |
           helm --kubeconfig=$HOME/.kube/config upgrade --install evekill helm-chart/ \
             --namespace evekill \
+            --set sentryDSN=${{ secrets.SENTRY_DSN_LOCAL }} \
             --set sentryRelay.dsn=${{ secrets.SENTRY_DSN_BACKEND }} \
+            --set sentryRelay.upstream=${{ secrets.SENTRY_RELAY_UPSTREAM }} \
             --set sentryRelay.secretKey=${{ secrets.SENTRY_RELAY_SECRET_KEY }} \
             --set sentryRelay.publicKey=${{ secrets.SENTRY_RELAY_PUBLIC_KEY }} \
             --set sentryRelay.id=${{ secrets.SENTRY_RELAY_ID }} \

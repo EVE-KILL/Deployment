@@ -1,8 +1,9 @@
 namespace: evekill
 imagePullPolicy: Always
-sentryDSN: "http://sentry.evekill.svc.cluster.local:3000"
+sentryDSN: ""
 sentryRelay:
   dsn: ""
+  upstream: ""
   secretKey: ""
   publicKey: ""
   id: ""
