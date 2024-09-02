@@ -153,6 +153,15 @@ jobs:
           SUBMODULE_COMMIT_HASH=$(git rev-parse --short HEAD)
           echo "::set-output name=hash::$SUBMODULE_COMMIT_HASH"
 
+      - name: Create Sentry release
+        uses: getsentry/action-release@v1
+        env:
+          SENTRY_AUTH_TOKEN: ${{ secrets.SENTRY_AUTH_TOKEN_BACKEND }}
+          SENTRY_ORG: eve-kill
+          SENTRY_PROJECT: backend
+        with:
+          version: ${{ steps.short_commit.outputs.hash }}
+
       - name: Tailscale
         uses: tailscale/github-action@v2
         with:
