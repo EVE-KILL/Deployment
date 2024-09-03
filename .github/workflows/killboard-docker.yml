@@ -133,6 +133,7 @@ jobs:
           kubectl --kubeconfig=$HOME/.kube/config -n evekill rollout restart deployment/queue-killmail
           kubectl --kubeconfig=$HOME/.kube/config -n evekill rollout restart deployment/queue-low
           kubectl --kubeconfig=$HOME/.kube/config -n evekill rollout restart deployment/queue-universe
+          kubectl --kubeconfig=$HOME/.kube/config -n evekill rollout restart deployment/queue-meilisearch
 
       - name: Remove kubeconfig
         run: rm -f $HOME/.kube/config
