@@ -43,7 +43,6 @@ jobs:
         run: |
           helm --kubeconfig=$HOME/.kube/config upgrade --install evekill helm-chart/ \
             --namespace evekill \
-            --set env.OPENAI_COMMENT_MODERATION_KEY=${{ secrets.OPENAI_COMMENT_MODERATION_KEY }} \
             --set sentryDSNFrontend=${{ secrets.SENTRY_DSN_FRONTEND }} \
             --set sentryDSN=${{ secrets.SENTRY_DSN_LOCAL }} \
             --set sentryRelay.dsn=${{ secrets.SENTRY_DSN_BACKEND }} \
@@ -61,6 +60,7 @@ jobs:
             --set config.webhooks.esi_errors=${{ secrets.WEBHOOKS_ESI_ERRORS }} \
             --set config.webhooks.errors=${{ secrets.WEBHOOKS_ERRORS }} \
             --set config.webhooks.new_characters_found=${{ secrets.WEBHOOKS_NEW_CHARACTERS_FOUND }} \
+            --set config.openai.comments=${{ secrets.OPENAI_COMMENT_MODERATION_KEY }}
             -f helm-chart/values.yaml
 
       - name: Remove kubeconfig

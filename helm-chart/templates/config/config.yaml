@@ -48,5 +48,8 @@ data:
         'esi-errors' => '{{ .Values.config.webhooks.esi_errors }}',
         'errors' => '{{ .Values.config.webhooks.errors }}',
         'new-characters-found' => '{{ .Values.config.webhooks.new_characters_found }}',
+      ],
+      'openai' => [
+        'comments' => '{{ .Values.config.openai.comments}}'
       ]
     ];
