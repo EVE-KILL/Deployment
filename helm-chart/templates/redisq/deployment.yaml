@@ -48,6 +48,10 @@ spec:
           env:
             - name: SENTRY_DSN
               value: {{ .Values.sentryDSN }}
+            {{- range $key, $value := .Values.env }}
+            - name: {{ $key }}
+              value: "{{ $value }}"
+            {{- end }}
           volumeMounts:
             - name: evekill-config
               mountPath: /app/config/config.php

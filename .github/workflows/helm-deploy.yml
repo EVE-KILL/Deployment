@@ -43,6 +43,7 @@ jobs:
         run: |
           helm --kubeconfig=$HOME/.kube/config upgrade --install evekill helm-chart/ \
             --namespace evekill \
+            --set env.OPENAI_COMMENT_MODERATION_KEY=${{ secrets.OPENAI_COMMENT_MODERATION_KEY }} \
             --set sentryDSNFrontend=${{ secrets.SENTRY_DSN_FRONTEND }} \
             --set sentryDSN=${{ secrets.SENTRY_DSN_LOCAL }} \
             --set sentryRelay.dsn=${{ secrets.SENTRY_DSN_BACKEND }} \

@@ -9,6 +9,9 @@ sentryRelay:
   publicKey: ""
   id: ""
 
+env:
+  OPENAI_COMMENT_MODERATION_KEY: ""
+
 ingress:
   clusterIssuer: letsencrypt
   ingressClass: nginx

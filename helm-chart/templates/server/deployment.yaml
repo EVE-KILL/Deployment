@@ -48,6 +48,10 @@ spec:
           env:
             - name: SENTRY_DSN
               value: {{ .Values.sentryDSN }}
+            {{- range $key, $value := .Values.env }}
+            - name: {{ $key }}
+              value: "{{ $value }}"
+            {{- end }}
           ports:
             - containerPort: 9201
           volumeMounts:
