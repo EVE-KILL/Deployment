@@ -6,7 +6,7 @@ spec:
   scaleTargetRef:
     name: queue-meilisearch
   minReplicaCount: 0
-  maxReplicaCount: 20
+  maxReplicaCount: 1
   triggers:
   - type: rabbitmq
     metadata:
