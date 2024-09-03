@@ -6,7 +6,7 @@ spec:
   scaleTargetRef:
     name: queue-character
   minReplicaCount: 0
-  maxReplicaCount: 10
+  maxReplicaCount: 5
   triggers:
   - type: rabbitmq
     metadata:
