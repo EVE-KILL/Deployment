@@ -16,8 +16,19 @@ spec:
   tls:
     - hosts:
         - eve-kill.com
+        - mobile.eve-kill.com
       secretName: evekill-tls
   rules:
+    - host: mobile.eve-kill.com
+      http:
+        paths:
+        - path: /
+          pathType: Prefix
+          backend:
+            service:
+              name: mobile
+              port:
+                number: 3000
     - host: eve-kill.com
       http:
         paths:
