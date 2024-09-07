@@ -23,6 +23,11 @@ frontend:
   version: latest
   replicas: 1
 
+mobile:
+  image: ghcr.io/eve-kill/mobile
+  version: latest
+  replicas: 1
+
 server:
   image: ghcr.io/eve-kill/killboard
   version: latest
