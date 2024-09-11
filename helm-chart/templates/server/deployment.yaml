@@ -54,6 +54,7 @@ spec:
             {{- end }}
           ports:
             - containerPort: 9201
+            - containerPort: 9202
           volumeMounts:
             - name: evekill-config
               mountPath: /app/config/config.php

@@ -6,6 +6,11 @@ spec:
   selector:
     app: server
   ports:
-    - protocol: TCP
+    - name: HTTP
+      protocol: TCP
       port: 9201
       targetPort: 9201
+    - name: Status
+      protocol: TCP
+      port: 9202
+      targetPort: 9202
