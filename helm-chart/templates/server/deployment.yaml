@@ -55,6 +55,18 @@ spec:
           ports:
             - containerPort: 9201
             - containerPort: 9202
+          livenessProbe:
+            httpGet:
+              path: /health?plugin=http
+              port: 9202
+            initialDelaySeconds: 5
+            periodSeconds: 10
+          readinessProbe:
+            httpGet:
+              path: /health?plugin=http
+              port: 9202
+            initialDelaySeconds: 5
+            periodSeconds: 10
           volumeMounts:
             - name: evekill-config
               mountPath: /app/config/config.php
