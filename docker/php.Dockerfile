@@ -86,6 +86,7 @@ RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local
 # Install packages
 #RUN COMPOSER_ALLOW_SUPERUSER=1 composer install --no-dev --no-interaction --no-suggest --optimize-autoloader --apcu-autoloader
 RUN \
+    COMPOSER_ALLOW_SUPERUSER=1 composer update -W && \
     COMPOSER_ALLOW_SUPERUSER=1 composer install --no-interaction --no-suggest --optimize-autoloader --apcu-autoloader && \
     php vendor/bin/rr get-binary
 
