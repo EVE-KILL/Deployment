@@ -1,12 +1,12 @@
 apiVersion: keda.sh/v1alpha1
 kind: ScaledObject
 metadata:
-  name: queue-character
+  name: queue-history
 spec:
   scaleTargetRef:
-    name: queue-character
+    name: queue-history
   minReplicaCount: 0
-  maxReplicaCount: 10
+  maxReplicaCount: 4
   triggers:
   - type: rabbitmq
     metadata:
@@ -14,4 +14,4 @@ spec:
       mode: QueueLength
       protocol: auto
       value: "1"
-      queueName: character
+      queueName: history
