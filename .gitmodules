@@ -7,3 +7,6 @@
 [submodule "mobile"]
 	path = mobile
 	url = git@github.com:EVE-KILL/Mobile.git
+[submodule "backend"]
+	path = backend
+	url = git@github.com:EVE-KILL/Backend.git
