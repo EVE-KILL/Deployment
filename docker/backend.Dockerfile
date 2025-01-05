@@ -12,6 +12,8 @@ COPY . /app
 # Install dependencies and build application
 RUN \
     bun install --production && \
+    # Ensure that node_modules/.bin is in the PATH
+    export PATH=$PATH:/app/node_modules/.bin && \
     bun run build
 
 # Expose the port
