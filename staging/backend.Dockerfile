@@ -17,4 +17,4 @@ RUN \
 # Expose the port
 EXPOSE 3000
 
-CMD [ "bun", "--bun", "index.js" ]
+CMD [ "bun", "--bun", "run", ".output/server/index.js" ]
