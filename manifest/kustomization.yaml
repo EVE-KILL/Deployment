@@ -1,0 +1,19 @@
+resources:
+  - namespace.yaml
+  - ingress.yaml
+  # Frontend
+  - frontend/deployment.yaml
+  - frontend/hpa.yaml
+  - frontend/service.yaml
+  # Backend
+  - backend/deployment.yaml
+  - backend/hpa.yaml
+  - backend/service.yaml
+  # Process Entities
+  - processEntities/deployment.yaml
+  # Process Wars
+  - processWars/deployment.yaml
+  # RedisQ
+  - redisq/deployment.yaml
+
+# Apply the config manually after editing it..

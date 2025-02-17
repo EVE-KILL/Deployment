@@ -1,0 +1,43 @@
+name: Helm-Deploy
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - 'manifest/**'
+  workflow_dispatch:
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    environment: production
+    concurrency:
+      group: ${{ github.workflow }}-${{ github.ref }}
+      cancel-in-progress: true
+    permissions:
+      contents: read
+      packages: write
+      id-token: write
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Tailscale
+        uses: tailscale/github-action@v2
+        with:
+          oauth-client-id: ${{ secrets.TS_OAUTH_CLIENT_ID }}
+          oauth-secret: ${{ secrets.TS_OAUTH_SECRET }}
+          tags: tag:ci
+
+      - name: Set up kubectl
+        run: |
+          tailscale configure kubeconfig tailscale-operator
+
+      - name: Deploy
+        run: |
+          kubectl apply -k manifest/
+
+      - name: Remove kubeconfig
+        run: rm -f $HOME/.kube/config

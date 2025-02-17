@@ -1,7 +1,7 @@
 # syntax=docker/dockerfile:1.4
 FROM oven/bun:latest AS build
 
-LABEL org.opencontainers.image.source="https://github.com/EVE-KILL/Frontend"
+LABEL org.opencontainers.image.source="https://github.com/EVE-KILL/Backend"
 
 # Set workdir
 WORKDIR /app

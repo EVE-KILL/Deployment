@@ -1,21 +1,21 @@
-name: Frontend - Build and Deploy
+name: Backend - Build and Deploy
 
 on:
   push:
     branches:
       - main
     paths:
-      - 'frontend/**'
+      - 'backend/**'
   repository_dispatch:
-    types: [update-frontend]
+    types: [update-backend]
   workflow_dispatch:
 
 env:
   REGISTRY: ghcr.io
-  IMAGE_NAME: eve-kill/frontend
+  IMAGE_NAME: eve-kill/backend
 
 jobs:
-  update-frontend-submodule:
+  update-backend-submodule:
     runs-on: ubuntu-latest
     concurrency:
       group: ${{ github.workflow }}-${{ github.ref }}
@@ -67,9 +67,9 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
-  build-frontend-container:
+  build-backend-container:
     runs-on: ubuntu-latest
-    needs: update-frontend-submodule
+    needs: update-backend-submodule
     concurrency:
       group: ${{ github.workflow }}-${{ github.ref }}
       cancel-in-progress: true
@@ -89,14 +89,9 @@ jobs:
       - name: Get submodule commit hash
         id: short_commit
         run: |
-          cd frontend
+          cd backend
           SUBMODULE_COMMIT_HASH=$(git rev-parse --short HEAD)
           echo "::set-output name=hash::$SUBMODULE_COMMIT_HASH"
-
-      - name: Create .npmrc
-        run: |
-          echo "//npm.pkg.github.com/:_authToken=${{ secrets.REPO_ACCESS_TOKEN }}" > frontend/.npmrc
-          echo "@eveshipfit:registry=https://npm.pkg.github.com/" >> frontend/.npmrc
 
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@aa33708b10e362ff993539393ff100fa93ed6a27 # v3.5.0
@@ -119,25 +114,25 @@ jobs:
             ${{ steps.short_commit.outputs.hash }}
 
       - name: Copy the docker folder into the build context
-        run: cp -r docker/ frontend/.docker
+        run: cp -r docker/ backend/.docker
 
       - name: Build and push Docker image
         id: build-and-push
         uses: docker/build-push-action@5176d81f87c23d6fc96624dfdbcd9f3830bbe445 # v6.5.0
         with:
-          file: docker/frontend.Dockerfile
-          context: frontend/
+          file: docker/backend.Dockerfile
+          context: backend/
           push: ${{ github.event_name != 'pull_request' }}
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
           #platforms: linux/amd64,linux/arm64
           platforms: linux/amd64
-          cache-from: type=gha,scope=frontend
-          cache-to: type=gha,mode=max,scope=frontend
+          cache-from: type=gha,scope=backend
+          cache-to: type=gha,mode=max,scope=backend
 
-  deploy-frontend:
+  deploy-backend:
     runs-on: ubuntu-latest
-    needs: build-frontend-container
+    needs: build-backend-container
     environment: production
     concurrency:
       group: ${{ github.workflow }}-${{ github.ref }}
@@ -158,16 +153,6 @@ jobs:
           SUBMODULE_COMMIT_HASH=$(git rev-parse --short HEAD)
           echo "::set-output name=hash::$SUBMODULE_COMMIT_HASH"
 
-      - name: Create Sentry release
-        uses: getsentry/action-release@v1
-        env:
-          SENTRY_AUTH_TOKEN: ${{ secrets.SENTRY_AUTH_TOKEN_FRONTEND }}
-          SENTRY_ORG: eve-kill
-          SENTRY_PROJECT: frontend
-        with:
-          version: ${{ steps.short_commit.outputs.hash }}
-          ignore_missing: true
-
       - name: Tailscale
         uses: tailscale/github-action@v2
         with:
@@ -181,30 +166,11 @@ jobs:
 
       - name: Deploy
         run: |
-          kubectl --kubeconfig=$HOME/.kube/config -n eve-kill rollout restart deployment/frontend
+          kubectl --kubeconfig=$HOME/.kube/config -n eve-kill rollout restart deployment/backend
 
       - name: Wait for rollout to finish
         run: |
-          kubectl --kubeconfig=$HOME/.kube/config -n eve-kill rollout status deployment/frontend
+          kubectl --kubeconfig=$HOME/.kube/config -n eve-kill rollout status deployment/backend
 
       - name: Remove kubeconfig
         run: rm -f $HOME/.kube/config
-
-  purge-cloudflare-cache:
-    runs-on: ubuntu-latest
-    needs: deploy-frontend
-    environment: production
-    concurrency:
-      group: ${{ github.workflow }}-${{ github.ref }}
-      cancel-in-progress: true
-    permissions:
-      contents: read
-      packages: write
-      id-token: write
-
-    steps:
-      - name: Purge Cloudflare Cache
-        uses: jakejarvis/cloudflare-purge-action@v0.3.0
-        env:
-          CLOUDFLARE_ZONE: ${{ secrets.CLOUDFLARE_ZONE_ID }}
-          CLOUDFLARE_TOKEN: ${{ secrets.CLOUDFLARE_CACHE_PURGE_TOKEN }}
