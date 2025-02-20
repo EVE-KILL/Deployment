@@ -10,6 +10,10 @@ metadata:
     nginx.ingress.kubernetes.io/proxy-read-timeout: "3600"
     nginx.ingress.kubernetes.io/proxy-send-timeout: "3600"
     nginx.ingress.kubernetes.io/enable-compression: "true"
+    nginx.ingress.kubernetes.io/proxy-set-headers: "X-Real-IP $remote_addr"
+    nginx.ingress.kubernetes.io/proxy-set-headers: "X-Forwarded-For $proxy_add_x_forwarded_for"
+    nginx.ingress.kubernetes.io/proxy-set-headers: "X-Forwarded-Proto $scheme"
+    nginx.ingress.kubernetes.io/proxy-set-headers: "X-Forwarded-Host $host"
     nginx.ingress.kubernetes.io/location-snippets: |
       location /killmails {
         proxy_set_header Upgrade "websocket";

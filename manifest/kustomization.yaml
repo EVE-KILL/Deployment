@@ -15,5 +15,7 @@ resources:
   - processWars/deployment.yaml
   # RedisQ
   - redisq/deployment.yaml
+  # Cron
+  - cron/deployment.yaml
 
 # Apply the config manually after editing it..

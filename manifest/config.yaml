@@ -19,4 +19,4 @@ data:
     PROCESS_KILLMAILS=true
     HOST=0.0.0.0
     INTERNAL_AUTH_KEY=
-
+    SENTRY_DSN=
