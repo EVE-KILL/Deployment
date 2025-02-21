@@ -166,19 +166,11 @@ jobs:
 
       - name: Deploy
         run: |
-          kubectl --kubeconfig=$HOME/.kube/config -n eve-kill rollout restart deployment/backend
-          kubectl --kubeconfig=$HOME/.kube/config -n eve-kill rollout restart deployment/redisq
-          kubectl --kubeconfig=$HOME/.kube/config -n eve-kill rollout restart deployment/process-entities
-          kubectl --kubeconfig=$HOME/.kube/config -n eve-kill rollout restart deployment/process-wars
-          kubectl --kubeconfig=$HOME/.kube/config -n eve-kill rollout restart deployment/cron
+          kubectl --kubeconfig=$HOME/.kube/config -n eve-kill rollout restart deployment/backend deployment/redisq deployment/process-entities deployment/process-wars deployment/cron
 
       - name: Wait for rollout to finish
         run: |
-          kubectl --kubeconfig=$HOME/.kube/config -n eve-kill rollout status deployment/backend
-          kubectl --kubeconfig=$HOME/.kube/config -n eve-kill rollout status deployment/redisq
-          kubectl --kubeconfig=$HOME/.kube/config -n eve-kill rollout status deployment/process-entities
-          kubectl --kubeconfig=$HOME/.kube/config -n eve-kill rollout status deployment/process-wars
-          kubectl --kubeconfig=$HOME/.kube/config -n eve-kill rollout status deployment/cron
+          kubectl --kubeconfig=$HOME/.kube/config -n eve-kill rollout status deployment/backend deployment/redisq deployment/process-entities deployment/process-wars deployment/cron
 
       - name: Remove kubeconfig
         run: rm -f $HOME/.kube/config
