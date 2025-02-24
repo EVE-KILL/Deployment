@@ -25,9 +25,20 @@ spec:
   ingressClassName: nginx
   tls:
     - hosts:
+        - images.eve-kill.com
         - eve-kill.com
       secretName: evekill-tls
   rules:
+    - host: images.eve-kill.com
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: imageserver
+                port:
+                  number: 3000
     - host: eve-kill.com
       http:
         paths:

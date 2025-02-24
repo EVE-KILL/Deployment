@@ -1,7 +1,7 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: frontend
+  name: imageserver
   namespace: eve-kill
 spec:
   replicas: 1
@@ -12,36 +12,35 @@ spec:
       maxUnavailable: 0
   selector:
     matchLabels:
-      app: frontend
+      app: imageserver
   template:
     metadata:
       labels:
-        app: frontend
+        app: imageserver
     spec:
       restartPolicy: Always
       containers:
-        - name: frontend
-          image: ghcr.io/eve-kill/frontend:latest
+        - name: imageserver
+          image: ghcr.io/eve-kill/imageserver:latest
           imagePullPolicy: Always
           ports:
             - containerPort: 3000
           livenessProbe:
             httpGet:
-              path: /healthcheck
+              path: /_healthcheck
               port: 3000
             initialDelaySeconds: 5
             periodSeconds: 10
           readinessProbe:
             httpGet:
-              path: /healthcheck
+              path: /_healthcheck
               port: 3000
             initialDelaySeconds: 5
             periodSeconds: 10
           volumeMounts:
-            - name: eve-kill-config
-              mountPath: /app/.env
-              subPath: .env
+            - name: imageserver
+              mountPath: /app/cache
       volumes:
-        - name: eve-kill-config
-          configMap:
-            name: eve-kill-config
+        - name: imageserver
+          persistentVolumeClaim:
+            claimName: imageserver

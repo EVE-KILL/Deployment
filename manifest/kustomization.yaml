@@ -17,5 +17,9 @@ resources:
   - redisq/deployment.yaml
   # Cron
   - cron/deployment.yaml
+  # Image server
+  - imageserver/deployment.yaml
+  - imageserver/service.yaml
+  - imageserver/volume.yaml
 
 # Apply the config manually after editing it..

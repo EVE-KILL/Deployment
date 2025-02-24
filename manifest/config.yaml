@@ -20,3 +20,7 @@ data:
     HOST=0.0.0.0
     INTERNAL_AUTH_KEY=
     SENTRY_DSN=
+    ENABLE_TASKS=true
+    EVE_CLIENT_ID=
+    EVE_CLIENT_SECRET=
+    EVE_CLIENT_REDIRECT=https://eve-kill.com/auth/callback
