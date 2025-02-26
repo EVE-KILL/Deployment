@@ -5,8 +5,13 @@ metadata:
   namespace: eve-kill
 spec:
   schedule: "* * * * *"
+  successfulJobsHistoryLimit: 5
+  failedJobsHistoryLimit: 5
+  startingDeadlineSeconds: 60
+  concurrencyPolicy: Allow
   jobTemplate:
     spec:
+      activeDeadlineSeconds: 3600
       template:
         spec:
           containers:
