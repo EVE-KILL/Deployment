@@ -16,7 +16,7 @@ resources:
   # RedisQ
   - redisq/deployment.yaml
   # Cron
-  - cron/deployment.yaml
+  - cron/cronjob.yaml
   # Image server
   - imageserver/deployment.yaml
   - imageserver/service.yaml
