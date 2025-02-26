@@ -166,11 +166,11 @@ jobs:
 
       - name: Deploy
         run: |
-          kubectl --kubeconfig=$HOME/.kube/config -n eve-kill rollout restart deployment/backend deployment/redisq deployment/process-entities deployment/process-wars deployment/cron
+          kubectl --kubeconfig=$HOME/.kube/config -n eve-kill rollout restart deployment/backend deployment/redisq deployment/process-entities deployment/process-wars
 
       - name: Wait for rollout to finish
         run: |
-          kubectl --kubeconfig=$HOME/.kube/config -n eve-kill rollout status deployment/backend deployment/redisq deployment/process-entities deployment/process-wars deployment/cron
+          kubectl --kubeconfig=$HOME/.kube/config -n eve-kill rollout status deployment/backend deployment/redisq deployment/process-entities deployment/process-wars
 
       - name: Remove kubeconfig
         run: rm -f $HOME/.kube/config
